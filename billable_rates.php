@@ -41,14 +41,15 @@ if ($_GET['action'] == "save")
 
 
 
-
-
 /*
  * INTERFACE
  *
  */
+
 $idd = $_GET['id'];
 $billing = <<<eof
+			<script type="text/javascript" src="js/functions.js"></script>
+
 			<form action="{$_SERVER['PHP_SELF']}?action=save" method="post">
 			<input type='hidden' name='timeid' value='$idd' />
 			<table width='100%'>
@@ -59,9 +60,28 @@ $billing = <<<eof
 					 <input type='radio' name='type' value='2' /> Fixed Amount Of
 				</td></tr>
 			<tr><td> Default Hourly Rate / Fixed Sum Of </td>
-			<tr><td> <input type='text' name='rate' value='' /> </td>
+			<tr><td> 
+				<input type="text" maxlength="10" size="10" name="rate" onkeypress="return(currencyFormat(this,'','.',event))" />
+			    </td>
 			<tr><td> Default Currency (BRL, USD, EUR, THB, etc..) </td>
-			<tr><td> <input type='text' name='currency' value='' /> </td>
+			<tr><td> 
+				<select name="currency" style="width:100px;">
+					<option value="0" selected> Select </option> 
+					<option value="BRL" > BRL - Brazilian Real </option> 
+					<option value="USD" > USD - US Dollar </option> 
+					<option value="EUR" > EUR - Euro </option> 
+					<option value="THB" > THB - Thai Baht </option> 
+					<option value="GBP" > GBP - British Pound </option> 
+					<option value="AED" > AED - Emirati Dirham </option> 
+					<option value="INR" > INR - Indian Rupee </option> 
+					<option value="CHF" > CHF - Swiss Franc </option> 
+					<option value="ILS" > ILS - Israeli Shekel </option> 
+					<option value="CNY" > CNY - Chinese Yuan Renminbi  </option> 
+					<option value="JPY" > JPY - Japanese Yen </option> 
+					<option value="AUD" > AUD - Australian Dollar </option> 
+
+				</select>
+			     </td>
 			<tr><td> &nbsp; </td>
 			<tr><td> <input type='submit' value='Save' /> </td>
 			</tr></table>
@@ -89,7 +109,7 @@ body {
     background-color:#93021C;
 
         /* fit the background image perfectly */
-        background: url(tahiti.png) no-repeat center center fixed;
+        background: url(images/tahiti.png) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
