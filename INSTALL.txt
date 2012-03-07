@@ -17,3 +17,5 @@ Edit config.class.php. Update the MySQL information.
         $this->mysqlUsername = "username";
         $this->mysqlPassword = "password";
         $this->mysqlDatabase = "time";
+
+It is all done!
