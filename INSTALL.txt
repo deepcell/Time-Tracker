@@ -5,17 +5,17 @@ Create a MySQL database. e.g. time
 mysql> create database time;
 mysql> quit;
 
-Import the schema.
+Import the schema.sql
 
-$ mysql -u username -p time < time.mysql
+$ mysql -u username -p time < schema.sql
 
 Edit config.class.php. Update the MySQL information.
 
-        // MySQL
-        $this->mysqlServer   = "localhost";
-        $this->mysqlPort     = 3306;
-        $this->mysqlUsername = "username";
-        $this->mysqlPassword = "password";
-        $this->mysqlDatabase = "time";
+        // MySQL Settings
+        $this->mysqlServer   = "localhost";	// MySQL string connection or IP address
+        $this->mysqlPort     = 3306;		// MySQL port - default is 3306
+        $this->mysqlUsername = "username";	// MySQL username
+        $this->mysqlPassword = "password";	// MySQL password
+        $this->mysqlDatabase = "time";		// MySQL database name
 
 It is all done!
