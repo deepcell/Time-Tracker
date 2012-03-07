@@ -149,7 +149,7 @@ if ($a_allHoursWorked)
 				 <td>" . $amount .' '. $currency . "</td></tr>";
 }
 
-$bodyContent .= "<h1>Time Tracker</h1>" . $timeForm . "<h3>Recent times worked</h3>" . $todaysTime . $thisWeeksTime . "<h3>All times worked</h3>" . $allTime . "<h3>Billing <a target='_blank' href='billable_rates.php?id=$timeid'><img src='edit.png'></a></h3>" . $billing;
+$bodyContent .= "<h1>Time Tracker</h1>" . $timeForm . "<h3>Recent times worked</h3>" . $todaysTime . $thisWeeksTime . "<h3>All times worked</h3>" . $allTime . "<h3>Billing <a target='_blank' href='billable_rates.php?id=$timeid'><img src='images/edit.png'></a></h3>" . $billing;
 
 
 $html = <<<eof
@@ -167,7 +167,7 @@ body {
     background-color:#93021C;
 
 	/* fit the background image perfectly */
-	background: url(tahiti.png) no-repeat center center fixed;
+	background: url(images/tahiti.png) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
