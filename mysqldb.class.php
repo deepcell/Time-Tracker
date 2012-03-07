@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Weldon Sams <wjsams@gmail.com>
  * @version 0.0.1
@@ -17,8 +18,14 @@
  * $mydb = Mysqldb::getInstance("localhost", 3306, "joefoo", "barpass", "database [optional]");
  * $a_results = $mydb->query("select album_dir, created_date from metadata");
  * print_r($a_results);
+ *
+ * slightly modified by Costa
+ * Date: 2012-01-15 15:15
+ *
  */
-class Mysqldb {
+
+class Mysqldb 
+{
     public $a_result;
     public $q;
     private static $singleton;

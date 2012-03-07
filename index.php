@@ -4,12 +4,12 @@ require_once("mysqldb.class.php");
 require_once("time.php");
 
 
-#$timeGettersSetters;
-
 $time = new TimeGettersSetters();
 $bodyContent = "";
 
-/**
+
+
+/*
  * Actions
  */
 
@@ -22,24 +22,27 @@ else if ($_GET['action'] == "clockOut")
 {
 	session_start();
 	$time->createNewBillingEntry();
-    $time->clockOut();
-    header("Location:{$_SERVER['PHP_SELF']}"); exit();
+	$time->clockOut();
+    	header("Location:{$_SERVER['PHP_SELF']}"); exit();
 }
 
-/**
+
+
+/*
  * Render page
  */
+
 if ($time->isClockedIn()) 
 {
-    $title = "IN";
-    $action = "clockOut";
-    $buttons = "<input disabled='disabled' type='submit' value='Clock in' /> <input type='submit' value='Clock out' />";
+    $title 	= "IN";
+    $action 	= "clockOut";
+    $buttons 	= "<input disabled='disabled' type='submit' value='Clock in' /> <input type='submit' value='Clock out' />";
 } 
 else 
 {
-    $title = "OUT";
-    $action = "clockIn";
-    $buttons = "<input type='submit' value='Clock in' /> <input disabled='disabled' type='submit' value='Clock out' />";
+    $title 	= "OUT";
+    $action 	= "clockIn";
+    $buttons 	= "<input type='submit' value='Clock in' /> <input disabled='disabled' type='submit' value='Clock out' />";
 }
 
 $timeForm = <<<eof
@@ -55,67 +58,66 @@ $timeWorkedToday = $time->convertUnixTimeToHours($time->getTotalTimeForDay(date(
 $todaysTime 	 = "<p><strong>Today:</strong> " . $time->convertUnixTimeToHours($time->getTotalTimeForDay(date("Y-m-d"))) . " hours (" . $time->convertUnixTimeToMinutes($time->getTotalTimeForDay(date("Y-m-d"))) . " minutes)</p>";
 $thisWeeksTime 	 = "<p><strong>This week:</strong> " . $time->convertUnixTimeToHours($time->getTotalTimeForCurrentWeek()) . " hours (" . $time->convertUnixTimeToMinutes($time->getTotalTimeForCurrentWeek()) . " minutes)</p>";
 
-$allTime = "";
-$a_allHoursWorked = $time->getHoursWorkedForEachDay();
+$allTime 		= "";
+$a_allHoursWorked 	= $time->getHoursWorkedForEachDay();
 if ($a_allHoursWorked) 
 {
-
 	// get last time ID	
-	$timeid = $time->getCurrentTimeId ();
-	$arr = $time->getTime ($timeid);
+	$timeid 	= $time->getCurrentTimeId ();
+	$arr 		= $time->getTime ($timeid);
+	$cnt 		= 0;
+	$weekNumber 	= null;
+	$a_weeksTotal 	= array();
+	$arrayCount 	= count($a_allHoursWorked) - 1;
 
-
-    $cnt = 0;
-    $weekNumber = null;
-    $a_weeksTotal = array();
-    $arrayCount = count($a_allHoursWorked) - 1;
-    foreach ($a_allHoursWorked as $date=>$secondsWorked) 
+	foreach ($a_allHoursWorked as $date=>$secondsWorked) 
 	{
-        $weekNumber = date("W", strtotime($date));
-        if ($cnt === 0) 
+        	$weekNumber = date("W", strtotime($date));
+		if ($cnt === 0) 
 		{
-            # starts a new week total
-            $a_weeksTotal[$weekNumber] = $time->getTotalTimeForDay($date);
-        } 
+		    # starts a new week total
+		    $a_weeksTotal[$weekNumber] = $time->getTotalTimeForDay($date);
+		} 
 		else 
 		{
-            if ($weekNumber === $previousWeekNumber) 
+			if ($weekNumber === $previousWeekNumber) 
 			{
-                # keep adding time to this weeks total
-                $a_weeksTotal[$weekNumber] += $time->getTotalTimeForDay($date);
-            } 
+				# keep adding time to this weeks total
+				$a_weeksTotal[$weekNumber] += $time->getTotalTimeForDay($date);
+			} 
 			else if ($weekNumber !== $previousWeekNumber || $cnt === $arrayCount) 
 			{
-                $allTime .= "<p class='weekHeading'><strong>Week({$previousWeekNumber}) Total:</strong> " . $time->convertUnixTimetoHours($a_weeksTotal[$previousWeekNumber]) . " hours (" . $time->convertUnixTimeToMinutes($a_weeksTotal[$previousWeekNumber]) . " minutes)</p>";
-
+                		$allTime .= "<p class='weekHeading'><strong>Week({$previousWeekNumber}) Total:</strong> " . $time->convertUnixTimetoHours($a_weeksTotal[$previousWeekNumber]) . " hours (" . $time->convertUnixTimeToMinutes($a_weeksTotal[$previousWeekNumber]) . " minutes)</p>";
 				# starts a new week total
-                $a_weeksTotal[$weekNumber] = $time->getTotalTimeForDay($date);
-            }
-        }
-        $allTime .= "<p><strong>{$date}:</strong> " . $time->convertUnixTimeToHours($secondsWorked) . " hours (" . $time->convertUnixTimeToMinutes($secondsWorked) . " minutes)</p>";
-        $previousWeekNumber = $weekNumber;
-        # This if block catches the very first week entered.
-        if ($weekNumber !== $previousWeekNumber || $cnt === $arrayCount) {
-            $allTime .= "<p class='weekHeading'><strong>Week({$previousWeekNumber}) Total:</strong> " . $time->convertUnixTimetoHours($a_weeksTotal[$previousWeekNumber]) . " hours (" . $time->convertUnixTimeToMinutes($a_weeksTotal[$previousWeekNumber]) . " minutes)</p>";
-            # starts a new week total
-            $a_weeksTotal[$weekNumber] = $time->getTotalTimeForDay($date);
-        }
+                		$a_weeksTotal[$weekNumber] = $time->getTotalTimeForDay($date);
+			}
+        	}
+
+        	$allTime .= "<p><strong>{$date}:</strong> " . $time->convertUnixTimeToHours($secondsWorked) . " hours (" . $time->convertUnixTimeToMinutes($secondsWorked) . " minutes)</p>";
+        	$previousWeekNumber = $weekNumber;
+        	# This if block catches the very first week entered.
+
+		if ($weekNumber !== $previousWeekNumber || $cnt === $arrayCount) 
+		{
+			$allTime .= "<p class='weekHeading'><strong>Week({$previousWeekNumber}) Total:</strong> " . $time->convertUnixTimetoHours($a_weeksTotal[$previousWeekNumber]) . " hours (" . $time->convertUnixTimeToMinutes($a_weeksTotal[$previousWeekNumber]) . " minutes)</p>";
+			# starts a new week total
+			$a_weeksTotal[$weekNumber] = $time->getTotalTimeForDay($date);
+		}
 
         $cnt++;
-    }
+	}
 
-
-	// consulta billable rates for this time tracker based in the client registered
+	// Query billable rates for this time tracker based in the registered client
 	$db = mysql_connect('localhost','root','') or die("Database error");
 	mysql_select_db('time', $db);
 
- 	$q 				= "SELECT * FROM billable_rates WHERE timeid=$timeid";
-	$result 		= mysql_query($q);
-	$row 			= mysql_fetch_array($result);
+ 	$q 		= "SELECT * FROM billable_rates WHERE timeid=$timeid";
+	$result 	= mysql_query($q);
+	$row 		= mysql_fetch_array($result);
 	$billable_id 	= $row['id'];
-	$workspace 		= $row['workspace'];
-	$rate 			= $row['rate'];
-	$currency 		= $row['currency'];
+	$workspace 	= $row['workspace'];
+	$rate 		= $row['rate'];
+	$currency 	= $row['currency'];
 
 
 	/* Grava valores na sessão para usar em billing, iso deve ser apagado na chamada da função em  time->createNewBillingEntry()  */
