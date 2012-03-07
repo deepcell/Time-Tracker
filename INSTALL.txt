@@ -12,12 +12,8 @@ $ mysql -u username -p time < time.mysql
 Edit config.class.php. Update the MySQL information.
 
         // MySQL
-        $this->mysqlServer = "localhost";
-        $this->mysqlPort = 3306;
-        $this->mysqlUsername = "mysqlUsername";
-        $this->mysqlPassword = "mysqlPassword";
+        $this->mysqlServer   = "localhost";
+        $this->mysqlPort     = 3306;
+        $this->mysqlUsername = "username";
+        $this->mysqlPassword = "password";
         $this->mysqlDatabase = "time";
-
-Open PHP Time Tracker in your browser and have fun.
-
-http://www.example.com/PHPTimeTracker-0.0.5/index.php
