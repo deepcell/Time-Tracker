@@ -1,0 +1,23 @@
+Create a MySQL username and password.
+
+Create a MySQL database. e.g. time
+
+mysql> create database time;
+mysql> quit;
+
+Import the schema.
+
+$ mysql -u username -p time < time.mysql
+
+Edit config.class.php. Update the MySQL information.
+
+        // MySQL
+        $this->mysqlServer = "localhost";
+        $this->mysqlPort = 3306;
+        $this->mysqlUsername = "mysqlUsername";
+        $this->mysqlPassword = "mysqlPassword";
+        $this->mysqlDatabase = "time";
+
+Open PHP Time Tracker in your browser and have fun.
+
+http://www.example.com/PHPTimeTracker-0.0.5/index.php
