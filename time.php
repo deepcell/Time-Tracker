@@ -2,18 +2,24 @@
 require_once("config.class.php");
 require_once("mysqldb.class.php");
 
-class TimeGettersSetters {
+class TimeGettersSetters 
+{
     private $db;
 
-    public function __construct() {
-        $this->db = Mysqldb::getInstance();
-        $this->db->switchDatabase('time');
+    public function __construct() 
+    {
+	$this->db = Mysqldb::getInstance();
+	$this->db->switchDatabase('time');
     }
+
+
 
     /**
      * time methods
      */
-    public function getNextTimeId () {
+
+    public function getNextTimeId () 
+    {
         $a_result = $this->db->query("select max(tid) + 1 as nextTimeId from time");
         $nextTid = $a_result[0]['nextTimeId'];
         if (intval($nextTid) > 0) {
@@ -164,10 +170,14 @@ class TimeGettersSetters {
         return false;
     }
 
-    /**
+
+
+    /*
      * Helper Functions
      */
-    public function isClockedIn() {
+
+    public function isClockedIn() 
+    {
         $a_results = $this->db->query("select tid, clockedIn, clockedOut, created from time where clockedIn > 0 and clockedOut = 0");
         if (!$a_results) {
             return false;
@@ -181,7 +191,8 @@ class TimeGettersSetters {
         return false;
     }
 
-    public function clockIn() {
+    public function clockIn() 
+    {
         if ($this->isClockedIn()) {
             return false;
         }
@@ -357,16 +368,21 @@ class TimeGettersSetters {
         return $a_hoursWorked;
     }
 
-	/* added in 4 feb 2012 by Fernando costa */
+
+    /* Create New billing entries is used to 
+     * Added in 4 feb 2012 by Fernando costa 
+     */
+
     public function createNewBillingEntry () 
-	{
-        $curdate = date("Y-m-d H:i:s");
-        if ($this->db->query("INSERT INTO billing (billable_rates, time, amount, datetime) VALUES ('$_SESSION[BILLID]', '$_SESSION[HOURS]', '$_SESSION[AMOUNT]', '$curdate')")) 
-		{	echo "OK";
-            return true;
-        }
-		echo "FUDEU!";
-        return false;
+    {
+        	$curdate = date("Y-m-d H:i:s");
+        	if ($this->db->query("INSERT INTO billing (billable_rates, time, amount, datetime) VALUES ('$_SESSION[BILLID]', '$_SESSION[HOURS]', '$_SESSION[AMOUNT]', '$curdate')")) 
+		{	
+			echo "OK";
+		    	return true;
+        	}
+			echo "KO";
+			return false;
     }
 
 }
