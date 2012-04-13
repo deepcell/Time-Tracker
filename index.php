@@ -45,8 +45,6 @@
 		}
 	</style>
 
-
-
 <?php
 require_once("config.class.php");
 require_once("mysqldb.class.php");
@@ -93,7 +91,7 @@ else
     $action 	= "clockIn";
     $buttons 	= "<input type='submit' value='Clock in' /> <input disabled='disabled' type='submit' value='Clock out' />";
 
-    // Unset some sessions here after clocked out
+    // Unset some sessions here after clocked out. Unset the session here.
     unset($_SESSION['ADDTIMEID']);
 }
 
