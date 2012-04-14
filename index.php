@@ -1,52 +1,52 @@
-	<!-- Add jQuery library -->
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<!-- Add jQuery library -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 
-	<!-- Add mousewheel plugin (this is optional) -->
-	<script type="text/javascript" src="jQuery/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+<!-- Add mousewheel plugin (this is optional) -->
+<script type="text/javascript" src="jQuery/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 
-	<!-- Add fancyBox main JS and CSS files -->
-	<script type="text/javascript" src="jQuery/source/jquery.fancybox.js"></script>
-	<link rel="stylesheet" type="text/css" href="jQuery/source/jquery.fancybox.css" media="screen" />
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="jQuery/source/jquery.fancybox.js"></script>
+<link rel="stylesheet" type="text/css" href="jQuery/source/jquery.fancybox.css" media="screen" />
 
-	<!-- Add Button helper (this is optional) -->
-	<link rel="stylesheet" type="text/css" href="jQuery/source/helpers/jquery.fancybox-buttons.css?v=2.0.4" />
-	<script type="text/javascript" src="jQuery/source/helpers/jquery.fancybox-buttons.js?v=2.0.4"></script>
+<!-- Add Button helper (this is optional) -->
+<link rel="stylesheet" type="text/css" href="jQuery/source/helpers/jquery.fancybox-buttons.css?v=2.0.4" />
+<script type="text/javascript" src="jQuery/source/helpers/jquery.fancybox-buttons.js?v=2.0.4"></script>
 
-	<!-- Add Thumbnail helper (this is optional) -->
-	<link rel="stylesheet" type="text/css" href="jQuery/source/helpers/jquery.fancybox-thumbs.css?v=2.0.4" />
-	<script type="text/javascript" src="jQuery/source/helpers/jquery.fancybox-thumbs.js?v=2.0.4"></script>
+<!-- Add Thumbnail helper (this is optional) -->
+<link rel="stylesheet" type="text/css" href="jQuery/source/helpers/jquery.fancybox-thumbs.css?v=2.0.4" />
+<script type="text/javascript" src="jQuery/source/helpers/jquery.fancybox-thumbs.js?v=2.0.4"></script>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			/*
-				Open manually
-			*/
-			$("#fancybox-manual-b").click(function() {
-				$.fancybox.open({
-					href : 'billable_rates.php', 
-					maxWidth	: 600,
-					maxHeight	: 500,
-					fitToView	: false,
-					width		: '60%',
-					height		: '60%',
-					autoSize	: false,
-					closeClick	: false,
-					openEffect	: 'none',
-					closeEffect	: 'none',
-					type : 'iframe',
-					padding : 5
-				});
+<script type="text/javascript">
+	$(document).ready(function() {
+		/*
+			Open manually
+		*/
+		$("#fancybox-manual-b").click(function() {
+			$.fancybox.open({
+				href : 'billable_rates.php', 
+				maxWidth	: 600,
+				maxHeight	: 500,
+				fitToView	: false,
+				width		: '60%',
+				height		: '60%',
+				autoSize	: false,
+				closeClick	: false,
+				openEffect	: 'none',
+				closeEffect	: 'none',
+				type : 'iframe',
+				padding : 5
 			});
 		});
-	</script>
-	<style type="text/css">
-		.fancybox-custom .fancybox-outer {
-			box-shadow: 0 0 50px #222;
-		}
-	</style>
+	});
+</script>
+<style type="text/css">
+	.fancybox-custom .fancybox-outer {
+		box-shadow: 0 0 50px #222;
+	}
+</style>
 
 <?php
-require_once("config.class.php");
+require("config.class.php");
 require_once("mysqldb.class.php");
 require_once("time.php");
 
@@ -160,12 +160,11 @@ if ($a_allHoursWorked)
         $cnt++;
 	}
 
-	// Query billable rates for this time tracker based in the registered client
-	$db = mysql_connect('localhost','root','cyber2065') or die("Database error");
-	mysql_select_db('time', $db);
+	//$db = mysql_connect('localhost','root','') or die("Database error");
+	//mysql_select_db('time', $db);
 
- 	$q 		= "SELECT * FROM billable_rates WHERE timeid=$timeid";
-	$result 	= mysql_query($q);
+	// Query billable rates for this time tracker based in the registered client
+ 	$result 	= mysql_query("SELECT * FROM billable_rates WHERE timeid=$timeid");
 	$row 		= mysql_fetch_array($result);
 	$billable_id 	= $row['id'];
 	$workspace 	= $row['workspace'];
@@ -181,19 +180,18 @@ if ($a_allHoursWorked)
 	$_SESSION['CURRENCY'] 	= $currency;
 
 
-	$q2 			= "SELECT created, timestamp FROM time WHERE tid=$timeid";
-	$result2 		= mysql_query($q2);
+	$result2 		= mysql_query("SELECT created, timestamp FROM time WHERE tid=$timeid");
 	$row2 			= mysql_fetch_array($result2);
-	$timestamp  	= $row2['timestamp'];
+	$timestamp  		= $row2['timestamp'];
 	$created  		= $row2['created'];
 
 
-	$tt = $time->convertUnixTimeToHours($time->getTotalTimeForDay($created)) . " hours (" . $time->convertUnixTimeToMinutes($time->getTotalTimeForDay($created)) . " min)";
-	$hours 				= $time->convertUnixTimeToHours($time->getTotalTimeForDay($created));
+	$tt 			= $time->convertUnixTimeToHours($time->getTotalTimeForDay($created)) . " hours (" . $time->convertUnixTimeToMinutes($time->getTotalTimeForDay($created)) . " min)";
+	$hours 			= $time->convertUnixTimeToHours($time->getTotalTimeForDay($created));
 	$_SESSION['HOURS'] 	= $hours;
-	$Today 				= $time->convertUnixTimeToHours($time->getTotalTimeForDay($created));
-	$amount				= ($rate * $Today);
-	$_SESSION['AMOUNT'] = $amount;
+	$Today 			= $time->convertUnixTimeToHours($time->getTotalTimeForDay($created));
+	$amount			= ($rate * $Today);
+	$_SESSION['AMOUNT'] 	= $amount;
 
 
 	$billing .= "<tr><td>" . $workspace . "</td>
