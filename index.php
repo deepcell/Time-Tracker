@@ -86,7 +86,8 @@ else if ($_GET['action'] == "clockOut")
 	session_start();
 	$time->createNewBillingEntry();
 	$time->clockOut();
-    	header("Location:{$_SERVER['PHP_SELF']}"); exit();
+    unset($_SESSION['CLOCKED_IN']);
+    header("Location:{$_SERVER['PHP_SELF']}"); exit();
 }
 
 
@@ -100,6 +101,10 @@ if ($time->isClockedIn())
     $title 	= "IN";
     $action 	= "clockOut";
     $buttons 	= "<input disabled='disabled' type='submit' value='Clock in' /> <input type='submit' value='Clock out' />";
+
+    // Start a session to save the state of the form
+    session_start();
+    $_SESSION['CLOCKED_IN'] = 1;
 } 
 else 
 {
@@ -214,8 +219,16 @@ if ($a_allHoursWorked)
 				 <td>" . $amount .' '. $currency . "</td></tr>";
 }
 
-$bodyContent .= "<h1>Time Tracker</h1>" . $timeForm . "<h3>Recent times worked</h3>" . $todaysTime . $thisWeeksTime . "<h3>All times worked</h3>" . $allTime . "<h3>Billing <a id='fancybox-manual-a' href='javascript:;'><img src='images/edit.png' title='Bill for' alt='Bill for' ></a>  <a id='fancybox-manual-b' href='javascript:;'><img src='images/add.png' title='Register Company' alt='Register Company' ></a> </h3> " . $billing;
-
+// If has a sesssion set then pass thru
+if (isset($_SESSION['CLOCKED_IN']) && $_SESSION['CLOCKED_IN']==1)
+{
+    $bodyContent .= "<h1>Time Tracker</h1>" . $timeForm . "<h3>Recent times worked</h3>" . $todaysTime . $thisWeeksTime . "<h3>All times worked</h3>" . $allTime . "<h3>Billing <a id='fancybox-manual-a' href='javascript:;'><img src='images/edit.png' title='Bill for' alt='Bill for' ></a>  <a id='fancybox-manual-b' href='javascript:;'><img src='images/add.png' title='Register Company' alt='Register Company' ></a> </h3> " . $billing;
+}
+else
+{
+    echo "<h3>Before proceed You need to clock in.</h3>";
+    $bodyContent .= "<h1>Time Tracker</h1>" . $timeForm . "<h3>Recent times worked</h3>" . $todaysTime . $thisWeeksTime . "<h3>All times worked</h3>" . $allTime . "<h3>Billing <a id='fancybox-manual-b' href='javascript:;'><img src='images/add.png' title='Register Company' alt='Register Company' ></a> </h3> " . $billing;
+}
 
 $html = <<<eof
 <html>
