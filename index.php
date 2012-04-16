@@ -19,16 +19,32 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		/*
-			Open manually
-		*/
-		$("#fancybox-manual-b").click(function() {
+		 * Open manually
+		 */
+		$("#fancybox-manual-a").click(function() {
 			$.fancybox.open({
 				href : 'billable_rates.php', 
 				maxWidth	: 600,
 				maxHeight	: 500,
 				fitToView	: false,
-				width		: '60%',
-				height		: '60%',
+				width		: '100%',
+				height		: '100%',
+				autoSize	: false,
+				closeClick	: false,
+				openEffect	: 'none',
+				closeEffect	: 'none',
+				type : 'iframe',
+				padding : 5
+			});
+		});
+		$("#fancybox-manual-b").click(function() {
+			$.fancybox.open({
+				href : 'company_add.php', 
+				maxWidth	: 600,
+				maxHeight	: 500,
+				fitToView	: false,
+				width		: '100%',
+				height		: '100%',
 				autoSize	: false,
 				closeClick	: false,
 				openEffect	: 'none',
@@ -171,14 +187,12 @@ if ($a_allHoursWorked)
 	$rate 		= $row['rate'];
 	$currency 	= $row['currency'];
 
-
-	/* Grava valores na sessão para usar em billing, iso deve ser apagado na chamada da função em  time->createNewBillingEntry()  */
+	// Start session to use with billing, need to be unset when clocked out (unset variables session when call time->createNewBillingEntry()).
 	session_start();
 	$_SESSION['BILLID'] 	= $billable_id;
 	$_SESSION['WORKSPACE'] 	= $workspace;
 	$_SESSION['RATE'] 	= $rate;
 	$_SESSION['CURRENCY'] 	= $currency;
-
 
 	$result2 		= mysql_query("SELECT created, timestamp FROM time WHERE tid=$timeid");
 	$row2 			= mysql_fetch_array($result2);
@@ -200,7 +214,7 @@ if ($a_allHoursWorked)
 				 <td>" . $amount .' '. $currency . "</td></tr>";
 }
 
-$bodyContent .= "<h1>Time Tracker</h1>" . $timeForm . "<h3>Recent times worked</h3>" . $todaysTime . $thisWeeksTime . "<h3>All times worked</h3>" . $allTime . "<h3>Billing <a id='fancybox-manual-b' href='javascript:;'><img src='images/edit.png'></a></h3>" . $billing;
+$bodyContent .= "<h1>Time Tracker</h1>" . $timeForm . "<h3>Recent times worked</h3>" . $todaysTime . $thisWeeksTime . "<h3>All times worked</h3>" . $allTime . "<h3>Billing <a id='fancybox-manual-a' href='javascript:;'><img src='images/edit.png' title='Bill for' alt='Bill for' ></a>  <a id='fancybox-manual-b' href='javascript:;'><img src='images/add.png' title='Register Company' alt='Register Company' ></a> </h3> " . $billing;
 
 
 $html = <<<eof
@@ -215,18 +229,18 @@ $html = <<<eof
 body {
     font-family:sans-serif;
     font-size:100%;
-    background-color:#93021C;
+    //background-color:#93021C;
 
-	/* fit the background image perfectly */
+	/* fit the background perfectly */
 	background: url(images/tahiti.png) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	/* fit the background image perfectly */
+	/* fit the background perfectly */
 
     text-align:center;
-    }
+}
 li {
     margin-bottom:8px;
     }
@@ -243,7 +257,7 @@ div#container {
     margin-left:auto;
     margin-right:auto;
     margin-top:32px;
-    margin-bottom:16px;
+//    margin-bottom:16px;
     padding:16px;
     background-color:white;
     -moz-border-radius:16px;
@@ -251,10 +265,10 @@ div#container {
     -webkit-box-shadow: 0px 0px 16px #000;
     -o-box-shadow: 0px 0px 16px #000;
     box-shadow: 0px 0px 16px #000;
-    }
+}
 .mono {
     font-family:monospace;
-    }
+}
 
 h1, h2, h3, h4 {
     margin:8px 4px;
