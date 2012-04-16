@@ -1,5 +1,5 @@
 <?php
-require_once("config.class.php");
+require("config.class.php");
 require_once("mysqldb.class.php");
 require_once("time.php");
 session_start();
@@ -26,7 +26,8 @@ if ($_GET['action'] == "save")
 	$q = "INSERT INTO `billable_rates` (`id`, `workspace`, `type`, `rate`, `currency`, `timeid`) VALUES (NULL, '$workspace', '$type', '$rate', '$curr', '$timeid')";
 
 	// insert data in db
-	$mydb = Mysqldb::getInstance("localhost", "", "root", "", "time");
+	//$mydb = Mysqldb::getInstance("localhost", "", "root", "", "time");
+	$mydb = Mysqldb::getInstance("", "", "", "", "");
 	$a_results = $mydb->query($q);
 	if (empty($a_results))
 	{ 
@@ -34,7 +35,7 @@ if ($_GET['action'] == "save")
 	}
 	else 
 	{ 
-		die("Success: Data was inserted in the data base."); 
+		die( "Success: Data was inserted in the data base." );
 	}
 
 }
@@ -111,7 +112,7 @@ body {
     background-color:#93021C;
 
         /* fit the background image perfectly */
-        background: url(images/tahiti.png) no-repeat center center fixed;
+        background: url(images/Black_Background.png) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
