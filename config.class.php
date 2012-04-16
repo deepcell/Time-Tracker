@@ -16,7 +16,7 @@ class Config
 		$this->mysqlServer   = "localhost";
 		$this->mysqlPort     = "";
 		$this->mysqlUsername = "root";
-		$this->mysqlPassword = "cyber2065";
+		$this->mysqlPassword = "";
 		$this->mysqlDatabase = "time";
 	}
     	public static function getInstance () 
