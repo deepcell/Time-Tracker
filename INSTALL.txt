@@ -1,0 +1,34 @@
+Create a MySQL username and password.
+
+Create a MySQL database. e.g. time
+
+mysql> create database time;
+mysql> quit;
+
+Import the schema.sql
+
+$ mysql -u username -p time < schema.sql
+
+Edit config.class.php. Update the MySQL information.
+
+        // MySQL Settings
+        $this->mysqlServer   = "localhost";	// MySQL string connection or IP address
+        $this->mysqlPort     = 3306;		// MySQL port - default is 3306
+        $this->mysqlUsername = "username";	// MySQL username
+        $this->mysqlPassword = "password";	// MySQL password
+        $this->mysqlDatabase = "time";		// MySQL database name
+
+
+It is all done!
+
+
+
+
+@TODO
+A little bug can be found when adding the "Billing" before "Clock In", then first "Clock In" 
+and after click the "Billing" link. (It will be fixed as soon as possible).
+
+In billable_rates.php "workspace name" field, change it to a combo field instead of input text and list all companys.
+
+Create: Register of company.
+
