@@ -25,10 +25,15 @@ It is all done!
 
 
 @TODO
-A little bug can be found when adding the "Billing" before "Clock In", then first "Clock In" 
-and after click the "Billing" link. (It will be fixed as soon as possible).
+[2012-04-12 02:30]
+1 - A little bug can be found when adding the "Billing" before "Clock In", then first
+"Clock In" and after click the "Billing" link. (It will be fixed as soon as possible). 
+2 - In billable_rates.php "workspace name" field, change it to a combo field instead 
+of input text and list all companys.
+3 - Create table and interface for company registration. It will provide a more efficient 
+method to add billing rates when billing the customers.
 
-In billable_rates.php "workspace name" field, change it to a combo field instead of input text and list all companys.
-
-Create: Register of company.
+@FIXED
+[2012-04-16 20:23]
+1 - The clock in problem was fixed using sessions to save the state of the program {Clocked In / Clocked Out}
 
