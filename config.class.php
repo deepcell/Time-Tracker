@@ -15,7 +15,7 @@ class Config
 		// MySQL
 		$this->mysqlServer   = "localhost";
 		$this->mysqlPort     = "";
-		$this->mysqlUsername = "root";
+		$this->mysqlUsername = "";
 		$this->mysqlPassword = "";
 		$this->mysqlDatabase = "time";
 	}
