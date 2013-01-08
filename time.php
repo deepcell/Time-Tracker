@@ -14,12 +14,11 @@ class TimeGettersSetters
 
 
 
-    /**
-     * time methods
-     */
-
-    public function getNextTimeId () 
-    {
+   /*
+    * time methods
+    */
+    
+    public function getNextTimeId () {
         $a_result = $this->db->query("select max(tid) + 1 as nextTimeId from time");
         $nextTid = $a_result[0]['nextTimeId'];
         if (intval($nextTid) > 0) {
@@ -75,6 +74,7 @@ class TimeGettersSetters
         }
         return false;
     }
+    
     public function getTimeTid ($tid) {
         if (intval($tid) === 0) {
             return false;
@@ -96,6 +96,7 @@ class TimeGettersSetters
         }
         return false;
     }
+    
     public function getTimeClockedin ($tid) {
         if (intval($tid) === 0) {
             return false;
@@ -117,6 +118,7 @@ class TimeGettersSetters
         }
         return false;
     }
+    
     public function getTimeClockedout ($tid) {
         if (intval($tid) === 0) {
             return false;
@@ -138,6 +140,7 @@ class TimeGettersSetters
         }
         return false;
     }
+    
     public function getTimeCreated ($tid) {
         if (intval($tid) === 0) {
             return false;
@@ -159,6 +162,7 @@ class TimeGettersSetters
         }
         return false;
     }
+    
     public function getTimeTimestamp ($tid) {
         if (intval($tid) === 0) {
             return false;
@@ -172,12 +176,11 @@ class TimeGettersSetters
 
 
 
-    /*
-     * Helper Functions
-     */
+   /*
+    * Helper Functions
+    */
 
-    public function isClockedIn() 
-    {
+    public function isClockedIn() {
         $a_results = $this->db->query("select tid, clockedIn, clockedOut, created from time where clockedIn > 0 and clockedOut = 0");
         if (!$a_results) {
             return false;
@@ -191,8 +194,7 @@ class TimeGettersSetters
         return false;
     }
 
-    public function clockIn() 
-    {
+    public function clockIn() {
         if ($this->isClockedIn()) {
             return false;
         }
@@ -369,12 +371,12 @@ class TimeGettersSetters
     }
 
 
-    /* Create New billing entries is used to 
-     * Added in 4 feb 2012 by Fernando costa 
-     */
 
-    public function createNewBillingEntry () 
-    {
+   /* Create New billing entries is used to 
+    * Added in 4 feb 2012 by Fernando costa 
+    */
+
+    public function createNewBillingEntry () {
         	$curdate = date("Y-m-d H:i:s");
         	if ($this->db->query("INSERT INTO billing (billable_rates, time, amount, datetime) VALUES ('$_SESSION[BILLID]', '$_SESSION[HOURS]', '$_SESSION[AMOUNT]', '$curdate')")) 
 		{	
