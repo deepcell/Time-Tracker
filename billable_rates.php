@@ -5,11 +5,11 @@ require_once("time.php");
 session_start();
 
 
+
 /*
  * ACTION SAVE
  *
  */
-
 if ($_GET['action'] == "save") 
 {
 	// sanitize data
@@ -46,12 +46,9 @@ if ($_GET['action'] == "save")
  * INTERFACE
  *
  */
-
-// Time Id come from session now
-$idd = $_SESSION['ADDTIMEID'];
+$idd = $_SESSION['ADDTIMEID'];		// Time Id come from session now
 $billing = <<<eof
 			<script type="text/javascript" src="js/functions.js"></script>
-
 			<form action="{$_SERVER['PHP_SELF']}?action=save" method="post">
 			<input type='hidden' name='timeid' value='$idd' />
 			<table width='100%'>
@@ -81,19 +78,16 @@ $billing = <<<eof
 					<option value="CNY" > CNY - Chinese Yuan Renminbi  </option> 
 					<option value="JPY" > JPY - Japanese Yen </option> 
 					<option value="AUD" > AUD - Australian Dollar </option> 
-
 				</select>
 			     </td>
 			<tr><td> &nbsp; </td>
 			<tr><td> <input type='submit' value='Save' /> </td>
 			</tr></table>
-
 			</form>
 eof;
 
 
 $bodyContent .= "<h1>Time Tracker</h1><h3>Billing</h3>" . $billing;
-
 
 
 $html = <<<eof
@@ -104,7 +98,6 @@ $html = <<<eof
 <style type="text/css">
 /* CSS goes here */
 /* The css variable below is populated via ssi/css.php if you need dynamic css. Throughly test in needed browsers. */
-
 
 body {
     font-family:sans-serif;
@@ -178,7 +171,6 @@ h1, h2, h3, h4 {
     -o-box-shadow: 0px 4px 2px gray;
     box-shadow: 0px 4px 2px gray;
 }
-
 form, p {
     margin:4px 4px;
     padding:4px 4px;
