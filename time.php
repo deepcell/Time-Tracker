@@ -383,14 +383,14 @@ class TimeGettersSetters
     */
 
     public function createNewBillingEntry () {
-        	$curdate = date("Y-m-d H:i:s");
-        	if ($this->db->query("INSERT INTO billing (billable_rates, time, amount, datetime) VALUES ('$_SESSION[BILLID]', '$_SESSION[HOURS]', '$_SESSION[AMOUNT]', '$curdate')")) 
+		$curdate = date("Y-m-d H:i:s");
+		if ($this->db->query("INSERT INTO billing (billable_rates, time, amount, datetime) VALUES ('$_SESSION[BILLID]', '$_SESSION[HOURS]', '$_SESSION[AMOUNT]', '$curdate')")) 
 		{	
 			echo "OK";
-		    	return true;
-        	}
-			echo "KO";
-			return false;
+	    	return true;
+       	}
+		echo "KO";
+		return false;
     }
 
 }
