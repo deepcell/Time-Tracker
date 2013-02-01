@@ -124,7 +124,10 @@ foreach ($val as $v) {
 
 	$h = $time->convertUnixTimeToHours($time->getTotalTimeForDay($v[created]));
 	$m = $time->convertUnixTimeToMinutes($time->getTotalTimeForDay($v[created]));
-	
+	$rate_per_minute = ($v[rate] / 60);
+    $total_worked = ($rate_per_minute * $m);
+    $total += $total_worked;
+
 
 	echo '
 	<table width=100%>
@@ -135,13 +138,14 @@ foreach ($val as $v) {
 		<tr><td><b>Payment Status</b></td><td>'.$v[status].'</td></tr>
 		<tr><td><b>Date Created</b></td><td>'.$v[created].'</td></tr>
 		<tr><td><b>Hour</b></td><td>'.$h.'</td></tr>
-		<tr><td><b>Minutes</b></td><td>'.$m.'</td></tr>
+        <tr><td><b>Minutes</b></td><td>'.$m.'</td></tr>
+        <tr><td><b>Total Amount: </b></td><td>'.$total_worked.' '.$v[currency].'</td></tr>
 	</table><hr />';
 }
 
 echo '
 <table width=100% >
-	<tr><td width=40%><b>Total Unpaid:</b></td><td>' . number_format($v[total], 2, ',', '.') .' '. $v[currency] . '</td></tr>
+	<tr><td width=40%><b>Total Unpaid:</b></td><td>' . number_format($total, 2, ',', '.') .' '. $v[currency] . '</td></tr>
 </table>';
 echo '</pre></div>';
 
