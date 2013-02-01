@@ -2,6 +2,7 @@
 require("config.class.php");
 require_once("mysqldb.class.php");
 require_once("time.php");
+$time = new TimeGettersSetters();
 session_start();
 
 
@@ -47,13 +48,20 @@ if ($_GET['action'] == "save")
  *
  */
 $idd = $_SESSION['ADDTIMEID'];		// Time Id come from session now
+$val = $time->getAllCompanies();
 $billing = <<<eof
 			<script type="text/javascript" src="js/functions.js"></script>
 			<form action="{$_SERVER['PHP_SELF']}?action=save" method="post">
 			<input type='hidden' name='timeid' value='$idd' />
 			<table width='100%'>
 			<tr><td> Workspace Name</td></tr>
-			<tr><td> <input type='text' name='workspace' value='' /> </td></tr>
+			<tr><td> 
+				<select name="workspace">
+					<option value="#">[Select]</option>
+					$val
+				</select>
+				</td>
+			</tr>
 			<tr><td> <input type='radio' name='type' value='0' /> Not Billable
 					 <input type='radio' name='type' value='1' /> Default Hourly Rate
 					 <input type='radio' name='type' value='2' /> Fixed Amount Of
