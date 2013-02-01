@@ -393,4 +393,45 @@ class TimeGettersSetters
 		return false;
     }
 
+
+
+    /*
+     * Get Company List
+     */
+    public function getAllCompanies() {
+        $results = $this->db->query("select * FROM company");
+        foreach ($results as $k=>$row) {
+			$a_company .= "<option value='" . $row['id'] . "'>" . $row['name'] . " - " . $row['responsible'] . "</option>";
+        }
+        return $a_company;
+    }
+    
+    /*
+     * Get Company List
+     */
+    public function getCompanyData($code) {
+		if (empty($code)) return false;
+        $results = $this->db->query("select c.*, br.rate, br.currency, br.status, t.clockedIn, t.clockedOut, t.created "
+								."FROM company c "
+								."LEFT JOIN billable_rates br ON br.workspace=c.id "
+								."LEFT JOIN time t ON t.tid=br.timeid "
+								."WHERE c.unique_code='{$code}' AND br.status='unpaid' ");
+        foreach ($results as $k=>$row) {
+			$total += $row['rate'];
+			$a_company[] = array( "id"=>$row['id'], 
+								"name"=>$row['name'], 
+								"responsible"=>$row['responsible'], 
+								"unique_code"=>$row['unique_code'], 
+								"rate"=>$row['rate'], 
+								"currency"=>$row['currency'], 
+								"status"=>$row['status'], 
+								"total"=>$total, 
+								"clockedIn"=>$row['clockedIn'], 
+								"clockedOut"=>$row['clockedOut'], 
+								"created"=>$row['created']);
+		}
+		return $a_company;
+    }
+
+
 }
