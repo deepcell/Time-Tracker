@@ -92,6 +92,7 @@ else if ($_GET['action'] == "clockOut")
 
 
 
+
 /*
  * Render page
  */
@@ -185,7 +186,7 @@ if ($a_allHoursWorked)
 	//mysql_select_db('time', $db);
 
 	// Query billable rates for this time tracker based in the registered client
- 	$result 	= mysql_query("SELECT * FROM billable_rates WHERE timeid=$timeid");
+ 	$result 	= mysql_query("SELECT br.*, c.name AS workspace FROM billable_rates br LEFT JOIN company c ON c.id = br.workspace WHERE br.timeid={$timeid}");
 	$row 		= mysql_fetch_array($result);
 	$billable_id 	= $row['id'];
 	$workspace 	= $row['workspace'];
