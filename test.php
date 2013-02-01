@@ -12,11 +12,9 @@ $time = new TimeGettersSetters();
 $val = $time->getCompanyData($_GET['action']);
 
 
-if ($_GET['action'] == "") 
+if ($val == "") 
 {
-	echo 1;
-	die;
-    header("Location:{$_SERVER['PHP_SELF']}"); exit();
+	die("No Data");
 }
 
 
